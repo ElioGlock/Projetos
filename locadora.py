@@ -14,7 +14,7 @@ carros_disponiveis = [
 ]
 alugado = []
 def limpar_console():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("cls")
 
 def catalogo():
     for i , car in enumerate(carros_disponiveis):
