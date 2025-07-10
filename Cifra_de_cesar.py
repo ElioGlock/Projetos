@@ -7,84 +7,99 @@ b = string.ascii_uppercase
 c = string.digits
 d = string.punctuation
 all = a + b + c + d
-# minusculas = string.ascii_lowercase
-# numeros = string.digits
 
 def limpar():
-    os.system("cls")
-    
-def codificar(cifrado):
-    for letra in texto:
+    os.system("cls" if os.name == 'nt' else 'clear') 
+
+
+def imprimir_centralizado_com_caixa(texto):
+    try:
+        largura_terminal = os.get_terminal_size().columns
+    except OSError:
+        largura_terminal = 80
+
+    if len(texto) > largura_terminal - 4:
+        texto = texto[:largura_terminal - 4]
+
+    texto_centralizado = texto.center(largura_terminal - 2)
+
+    linha_superior = '┌' + '─' * (largura_terminal - 2) + '┐'
+    linha_meio = '│' + texto_centralizado + '│'
+    linha_inferior = '└' + '─' * (largura_terminal - 2) + '┘'
+
+    print(linha_superior)
+    print(linha_meio)
+    print(linha_inferior)
+
+
+def codificar(texto_original, chave_original):
+    cifrado = ""
+    for letra in texto_original:
         if letra in all:
             posicao = all.find(letra)
-            nova_posicao = (posicao + chave) % len(all)#O % faz com que volte para a identação da listam,usando com exemplo caso o valor seja 56 e passe da lista(26), essa função faz retornar.
-            if chave % 94 == 0:
-                cifrado += all[nova_posicao + 56] 
+            nova_posicao = (posicao + chave_original) % len(all)
+            if chave_original % 94 == 0:
+                cifrado += all[nova_posicao + 56]
             else:
-                cifrado += all[nova_posicao]  
-
+                cifrado += all[nova_posicao]
         else:
             cifrado += letra
-    print(cifrado)
-    
-def descriptografar(descifrar):
-    for letra in texto:
+    return cifrado
+
+def descriptografar(texto_cifrado, chave_original): 
+    descifrar = ""
+    for letra in texto_cifrado:
         if letra in all:
             posicao = all.find(letra)
-            nova_posicao = (posicao - chave) % len(all)
-            if chave % 94 == 0:
-                descifrar += all[nova_posicao - 56] 
+            nova_posicao = (posicao - chave_original) % len(all)
+            if chave_original % 94 == 0:
+                descifrar += all[nova_posicao - 56]
             else:
-                descifrar += all[nova_posicao]               
+                descifrar += all[nova_posicao]
         else:
             descifrar += letra
-    print(descifrar)
+    return descifrar 
 
 
-    
 opcoes = [0,1,""]
 
 while True:
     try:
         limpar()
-        inicio = int(input("Oque deseja fazer hoje?\n0 - codificar | 1 - decifrar | 2 - sair\n"))
+        # Você também pode usar a função para o menu, se quiser
+        imprimir_centralizado_com_caixa("O que deseja fazer hoje?")
+        print("0 - Codificar | 1 - Decifrar | 2 - Sair")
+        inicio = int(input(">> "))
+
         if inicio == 0:
             while True:
                 try:
-                    texto = input("Digite o texto:\n")
-                    chave = int(input("Digite uma chave, somente n° Inteiros:\n"))
-                    cifrado = ""
-                    print("Texto Criptografado abaixo:")
-                    codificar(cifrado)
+                    texto = input("Digite o texto:\n>> ")
+                    chave = int(input("Digite uma chave (somente n° Inteiros):\n>> "))
+                    resultado_cifrado = codificar(texto, chave)
+                    print("\nTexto Criptografado abaixo:")
+                    imprimir_centralizado_com_caixa(resultado_cifrado)
                     time.sleep(10)
                     break
                 except ValueError:
                     limpar()
-                    print("Você só pode usar n° Inteiros")
+                    print("Você só pode usar n° Inteiros para a chave.")
                     continue
         elif inicio == 1:
             while True:
                 try:
-                    texto = input("Digite o texto:\n")
-                    chave = int(input("Digite uma chave, somente n° Inteiros:\n"))
-                    descifrado = ""
-                    print("Texto descriptografado abaixo:")
-                    descriptografar(descifrado)
+                    texto = input("Digite o texto:\n>> ")
+                    chave = int(input("Digite uma chave (somente n° Inteiros):\n>> "))
+                    resultado_descifrado = descriptografar(texto, chave)
+                    print("\nTexto descriptografado abaixo:")
+                    imprimir_centralizado_com_caixa(resultado_descifrado)
                     time.sleep(10)
                     break
                 except ValueError:
                     limpar()
-                    print("Você só pode usar n° Inteiros")
+                    print("Você só pode usar n° Inteiros para a chave.")
                     continue
         elif inicio == 2:
             break
     except ValueError:
         continue
-    
-    
-    
-    
-
-    
-    
-
