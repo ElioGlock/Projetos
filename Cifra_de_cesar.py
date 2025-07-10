@@ -47,7 +47,7 @@ opcoes = [0,1,""]
 while True:
     try:
         limpar()
-        inicio = int(input("Oque deseja fazer hoje?\n0 - codificar 1 - decifrar\n"))
+        inicio = int(input("Oque deseja fazer hoje?\n0 - codificar | 1 - decifrar | 2 - sair\n"))
         if inicio == 0:
             while True:
                 try:
@@ -56,7 +56,7 @@ while True:
                     cifrado = ""
                     print("Texto Criptografado abaixo:")
                     codificar(cifrado)
-                    time.sleep(5)
+                    time.sleep(10)
                     break
                 except ValueError:
                     limpar()
@@ -69,13 +69,15 @@ while True:
                     chave = int(input("Digite uma chave, somente n° Inteiros:\n"))
                     descifrado = ""
                     print("Texto descriptografado abaixo:")
-                    codificar(descifrado)
-                    time.sleep(5)
+                    descriptografar(descifrado)
+                    time.sleep(10)
                     break
                 except ValueError:
                     limpar()
                     print("Você só pode usar n° Inteiros")
                     continue
+        elif inicio == 2:
+            break
     except ValueError:
         continue
     
