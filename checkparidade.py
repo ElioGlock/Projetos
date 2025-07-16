@@ -1,6 +1,6 @@
-import os
 from decoradores import imprimir_centralizado_com_caixa
-
+import os
+import time
 def verificar_primo(n):
     count = 0
     lista=[]
@@ -14,8 +14,10 @@ def verificar_primo(n):
         return "PRIMO"
     else:
         return "N° COMPOSTO", lista
-    
-imprimir_centralizado_com_caixa("Bem vindo ao detector de numeros Primos!")
-digite = int(input("Digite o numero que deseja verificar\n>>"))
-caixa = verificar_primo(digite)
-imprimir_centralizado_com_caixa("{}, {} é divisivel por {}".format(caixa[0],digite,caixa[1]))
+while True:    
+    imprimir_centralizado_com_caixa("Bem vindo ao detector de numeros Primos!")
+    digite = int(input("Digite o numero que deseja verificar\n>>"))
+    caixa = verificar_primo(digite)
+    imprimir_centralizado_com_caixa("{}, {} é divisivel por {}".format(caixa[0],digite,caixa[1]))
+    time.sleep(7)
+    os.system("cls")
